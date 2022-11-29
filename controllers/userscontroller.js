@@ -1,7 +1,7 @@
 /* import RecordsCollection from "../models/recordsschema.js"
 import OrdersColleciton from "../models/ordersschema.js" */
 import UsersCollection from "../models/usersschema.js"
-import {validationResult} from "express-validator"
+import bcrypt from "bcrypt"
 
 import jwt from "jsonwebtoken"
 
@@ -118,8 +118,8 @@ export const loginUser = async(req,res,next)=>{
     try{
         const user = await UsersCollection.findOne({email: req.body.email})
         if(user){
-           
-            if(true){
+           const check = bcrypt.compareSync(req.body.password,user.password)
+            if(check){
                 //authentication // create token
                 // first argument in sign is payload (user's data)
                 let token = jwt.sign({_id:user._id, firstName: user.firstName}, process.env.TOKEN_SECRET_KEY ,{expiresIn:"1h",issuer:"Naqvi",audience:"students"})
