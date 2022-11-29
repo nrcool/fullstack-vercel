@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
     firstName: {type:String, required:true},
     lastName: {type:String, required:true},
-    email:{type:String, required:true, unique: true},
+    email:{type:String, required:true},
     role:{type:String, enum:["user","manager"] , default:"user" },
     token:{type:String},
     profileImage:{type:String, default:function(){
@@ -58,6 +58,6 @@ userSchema.post("save", function(){
 const UsersCollection = mongoose.model("users", userSchema)
 
 //create index 
-UsersCollection.createIndexes({email:-1})
+/* UsersCollection.createIndexes({email:-1}) */
 
 export default UsersCollection ;
