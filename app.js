@@ -38,9 +38,9 @@ app.use(cookieParser())
 
 
 // serve static files/pages
-app.use(express.static("upload"))
+/* app.use(express.static("upload")) */
 // serve static files in views/build folder
-app.use(express.static("views/build"))
+app.use(express.static("./views/build"))
 
 app.get("/",(req,res)=>{
     res.sendFile("./views/build/index.html", {root:"."})
