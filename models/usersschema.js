@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import bcrypt from "bcrypt"
+
 const Schema = mongoose.Schema 
 
 //user document structure
@@ -30,7 +30,7 @@ userSchema.virtual("fullName").get(function(){
     return this.email.split("@")[1].split(".")[0]
 })
  */
-userSchema.pre("save", function(next){ 
+/* userSchema.pre("save", function(next){ 
     if(this.isModified("password")){
          const hashedPassword = bcrypt.hashSync(this.password ,10)
         this.password = hashedPassword;
@@ -38,7 +38,7 @@ userSchema.pre("save", function(next){
     }
         next()    
 } )
-
+ */
 /* userSchema.pre("findOneAndUpdate",function(next){
     console.log(this)
     if(this.isModified("password")){
