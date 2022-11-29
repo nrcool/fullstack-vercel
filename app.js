@@ -6,8 +6,10 @@ import cookieParser from "cookie-parser"
 import usersRoute from "./routes/usersroute.js"
 import recordsRoute from "./routes/recordsroute.js"
 import ordersRoute from "./routes/ordersroute.js"
+import path from "path"
+import {fileURLToPath} from "url"
 /* import cors from "cors" */
-
+const __dirname= path.dirname(fileURLToPath(import.meta.url))
 //creating/initializing express server
 const app = express()
 const PORT = process.env.PORT || 4000; 
@@ -40,10 +42,10 @@ app.use(cookieParser())
 // serve static files/pages
 /* app.use(express.static("upload")) */
 // serve static files in views/build folder
-app.use(express.static("./views/build"))
+app.use(express.static(path.resolve(__dirname, "views/build")))
 
 app.get("/",(req,res)=>{
-    res.sendFile("./views/build/index.html", {root:"."})
+    res.sendFile(path.resolve(__dirname, "views/build/index.html"))
 })
 
 //Customer middleware
