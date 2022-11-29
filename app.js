@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser"
 import usersRoute from "./routes/usersroute.js"
 import recordsRoute from "./routes/recordsroute.js"
 import ordersRoute from "./routes/ordersroute.js"
+import multer from "multer"
 import path from "path"
 import {fileURLToPath} from "url"
 /* import cors from "cors" */
@@ -18,7 +19,17 @@ const PORT = process.env.PORT || 4000;
 /* const upload = multer({dest:"upload/"}) */
 
 //setup multer diskStorage
-
+const storage = multer.diskStorage({
+    destination:function(req,file,cb){
+        let fullPath= "./upload"
+        cb(null, fullPath)
+    },
+    filename:function(req,file,cb){
+        let fileName = Date.now()+"_"+ file.originalname
+        cb(null,fileName)
+    }
+})
+const upload = multer({storage:storage})
 
 //create mongoose connection
 mongoose.connect(process.env.MONGO_URI , ()=>{
@@ -70,10 +81,10 @@ app.use(  log , checkMethod , thirdMiddleware) */
 
 //Routes 
 // "/users" GET POST PATCH DELETE // upload.single will attached req.file
-app.use("/users",  usersRoute)
+app.use("/users", upload.single("image"),  usersRoute)
 
 // "/records" GET POST PATCH DELETE
-app.use("/records",recordsRoute)
+app.use("/records", upload.single("image"), recordsRoute)
 
 // "/orders" GET POST PATCH DELETE
 app.use("/orders", ordersRoute)
