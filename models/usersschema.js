@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 
 const Schema = mongoose.Schema 
 
+
 //user document structure
 const userSchema = new Schema({
     firstName: {type:String, required:true},
